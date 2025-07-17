@@ -65,7 +65,7 @@ export default function NovaLanding() {
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight animate-fade-in-up animation-delay-200">
               Tokenizing the Future of{" "}
               <span className="bg-gradient-to-r from-emerald-400 to-purple-400 bg-clip-text text-transparent animate-gradient-x bg-300% animate-text-shimmer">
-                Cocoa Trade
+                Cocoa 
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-emerald-100 mb-8 leading-relaxed animate-fade-in-up animation-delay-400">
