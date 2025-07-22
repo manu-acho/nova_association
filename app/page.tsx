@@ -12,6 +12,8 @@ export default function NovaLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [cocoaPrice, setCocoaPrice] = useState(2847) // Current cocoa price per tonne
   const [developmentProgress, setDevelopmentProgress] = useState(65) // Development completion percentage
+  const [tokenizedValue, setTokenizedValue] = useState(0) // Current tokenized value in USD
+  const [targetTokenizedValue] = useState(21000000) // Target $21M
 
   // Realistic market data updates
   useEffect(() => {
@@ -33,16 +35,16 @@ export default function NovaLanding() {
       <div className="absolute top-3/4 right-1/4 particle particle-purple w-3 h-3 animation-delay-600"></div>
       <div className="absolute bottom-1/3 left-1/3 particle w-1 h-1 animation-delay-400"></div>
 
-      {/* Header with Realistic Project Status */}
+      {/* Header with CacaoX Branding */}
       <header className="relative z-50 px-4 lg:px-6 h-16 flex items-center backdrop-blur-sm bg-black/20 border-b border-emerald-500/20 transition-all duration-300">
         <div className="container mx-auto flex items-center justify-between">
           <div className="flex items-center space-x-2 group">
             <div className="relative w-8 h-8 bg-gradient-to-r from-emerald-400 to-purple-400 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 animate-pulse-slow border-neon">
-              <span className="text-black font-bold text-sm">N</span>
+              <span className="text-black font-bold text-sm">🍫</span>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 to-purple-400 rounded-lg blur-sm opacity-50 -z-10 group-hover:opacity-75 transition-opacity duration-300 animate-blockchain-pulse"></div>
             </div>
             <span className="text-white font-bold text-lg sm:text-xl transition-colors duration-300 group-hover:text-emerald-200">
-              Nova Association
+              CacaoX
             </span>
             <Badge className="ml-2 bg-orange-500/20 text-orange-300 border-orange-500/30 text-xs px-2 py-1 animate-pulse-slow">
               IN DEVELOPMENT
@@ -53,7 +55,7 @@ export default function NovaLanding() {
           <div className="hidden lg:flex items-center space-x-4 text-sm">
             <div className="flex items-center space-x-2 glassmorphism px-3 py-1 rounded-lg">
               <Building className="w-4 h-4 text-emerald-400 animate-pulse-slow" />
-              <span className="text-emerald-200">Swiss Verein</span>
+              <span className="text-emerald-200">Nova Association</span>
               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-slow"></div>
             </div>
             <div className="glassmorphism px-3 py-1 rounded-lg">
@@ -206,7 +208,7 @@ export default function NovaLanding() {
         )}
       </header>
 
-      {/* Hero Section with Realistic Project Information */}
+      {/* Hero Section with Updated Timeline */}
       <section className="relative py-12 sm:py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 backdrop-blur-3xl animate-gradient-shift-slow"></div>
         
@@ -273,7 +275,7 @@ export default function NovaLanding() {
               </Button>
             </div>
 
-            {/* Current Project Metrics */}
+            {/* Updated Project Metrics */}
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-2xl mx-auto">
               <div className="glassmorphism p-4 rounded-lg border-neon hover-lift">
                 <div className="text-2xl font-bold text-emerald-400 animate-counter">{developmentProgress}%</div>
@@ -281,7 +283,7 @@ export default function NovaLanding() {
                 <Progress value={developmentProgress} className="mt-2 progress-glow" />
               </div>
               <div className="glassmorphism p-4 rounded-lg border-neon hover-lift">
-                <div className="text-2xl font-bold text-purple-400 animate-counter">Q2 2025</div>
+                <div className="text-2xl font-bold text-purple-400 animate-counter">Q3 2025</div>
                 <div className="text-emerald-200 text-sm">Expected Launch</div>
                 <div className="flex items-center mt-2">
                   <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse-slow mr-2"></div>
@@ -289,11 +291,18 @@ export default function NovaLanding() {
                 </div>
               </div>
               <div className="glassmorphism p-4 rounded-lg border-neon hover-lift">
-                <div className="text-2xl font-bold text-emerald-400 animate-counter">3,000T</div>
-                <div className="text-emerald-200 text-sm">Initial Capacity</div>
-                <div className="flex items-center mt-2">
-                  <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-slow mr-2"></div>
-                  <span className="text-xs text-emerald-300">Planned</span>
+                <div className="text-2xl font-bold text-emerald-400 animate-counter">${(tokenizedValue / 1000000).toFixed(1)}M</div>
+                <div className="text-emerald-200 text-sm">Tokenized Value</div>
+                <div className="mt-2">
+                  <div className="flex justify-between text-xs text-emerald-300 mb-1">
+                    <span>Current</span>
+                    <span>Target: $21M</span>
+                  </div>
+                  <Progress value={(tokenizedValue / targetTokenizedValue) * 100} className="progress-glow" />
+                  <div className="flex items-center mt-1">
+                    <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse-slow mr-2"></div>
+                    <span className="text-xs text-red-300">Not Started</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -314,18 +323,18 @@ export default function NovaLanding() {
         </div>
       </section>
 
-      {/* Updated Stats Section with Realistic Information */}
+      {/* Updated Stats Section */}
       <section className="py-12 sm:py-16 bg-black/20 backdrop-blur-sm border-y border-emerald-500/20 transition-all duration-500 hover:bg-black/30 cyber-grid">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
             <div className="group transition-all duration-300 hover:scale-105 glassmorphism p-4 rounded-lg border-neon hover-lift">
               <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-emerald-400 mb-1 sm:mb-2 transition-all duration-300 group-hover:text-emerald-300 animate-counter terminal-text">
-                3,000T
+                $21M
               </div>
               <div className="text-sm sm:text-base text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
-                Initial Capacity Target
+                Target Tokenized Value
               </div>
-              <div className="mt-2 text-xs text-emerald-400">📋 Planned Volume</div>
+              <div className="mt-2 text-xs text-emerald-400">💰 Initial Capacity</div>
             </div>
             <div className="group transition-all duration-300 hover:scale-105 glassmorphism p-4 rounded-lg border-neon hover-lift">
               <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-purple-400 mb-1 sm:mb-2 transition-all duration-300 group-hover:text-purple-300 animate-counter animation-delay-200 terminal-text">
@@ -334,11 +343,11 @@ export default function NovaLanding() {
               <div className="text-sm sm:text-base text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
                 Origin Countries
               </div>
-              <div className="mt-2 text-xs text-purple-400">🌍 Côte d'Ivoire, Ghana, Ecuador</div>
+              <div className="mt-2 text-xs text-purple-400">🌍 Cameroon, Côte d'Ivoire, Ghana</div>
             </div>
             <div className="group transition-all duration-300 hover:scale-105 glassmorphism p-4 rounded-lg border-neon hover-lift">
               <div className="text-2xl font-bold text-emerald-400 mb-1 sm:mb-2 transition-all duration-300 group-hover:text-emerald-300 animate-counter animation-delay-400 terminal-text">
-                Q2
+                Q3
               </div>
               <div className="text-sm sm:text-base text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
                 2025 Launch Target
@@ -358,57 +367,7 @@ export default function NovaLanding() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="about" className="py-12 sm:py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6">Revolutionizing Commodity Finance</h2>
-            <p className="text-lg sm:text-xl text-emerald-200 max-w-3xl mx-auto px-2">
-              From illiquid cocoa markets to dynamic, accessible, and transparent ecosystem for institutional investors
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <Card className="bg-gradient-to-br from-emerald-900/50 to-purple-900/50 border-emerald-500/30 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-400/50 group animate-fade-in-up">
-              <CardHeader>
-                <Shield className="h-12 w-12 text-emerald-400 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-emerald-300" />
-                <CardTitle className="text-white transition-colors duration-300 group-hover:text-emerald-100">
-                  Tokenized Warehouse Receipts
-                </CardTitle>
-                <CardDescription className="text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
-                  Transform physical cocoa into digital assets backed by certified warehouse receipts
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-purple-900/50 to-emerald-900/50 border-purple-500/30 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-purple-500/10 hover:border-purple-400/50 group animate-fade-in-up animation-delay-200">
-              <CardHeader>
-                <TrendingUp className="h-12 w-12 text-purple-400 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-purple-300" />
-                <CardTitle className="text-white transition-colors duration-300 group-hover:text-emerald-100">
-                  Enhanced Liquidity
-                </CardTitle>
-                <CardDescription className="text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
-                  Fractional ownership and easier transferability of cocoa assets through blockchain technology
-                </CardDescription>
-              </CardHeader>
-            </Card>
-
-            <Card className="bg-gradient-to-br from-emerald-900/50 to-purple-900/50 border-emerald-500/30 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/10 hover:border-emerald-400/50 group animate-fade-in-up animation-delay-400">
-              <CardHeader>
-                <Globe className="h-12 w-12 text-emerald-400 mb-4 transition-all duration-300 group-hover:scale-110 group-hover:text-emerald-300" />
-                <CardTitle className="text-white transition-colors duration-300 group-hover:text-emerald-100">
-                  Full Traceability
-                </CardTitle>
-                <CardDescription className="text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
-                  Complete transparency from farm to token with blockchain-verified supply chain
-                </CardDescription>
-              </CardHeader>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Updated Tokenomics Section */}
+      {/* Updated Tokenomics Roadmap */}
       <section
         id="tokenomics"
         className="py-12 sm:py-20 bg-gradient-to-r from-emerald-900/20 to-purple-900/20 animate-gradient-shift-slow"
@@ -477,6 +436,18 @@ export default function NovaLanding() {
                 <div className="space-y-4">
                   <div className="flex justify-between text-sm group transition-all duration-300 hover:translate-x-1">
                     <span className="text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
+                      Acquired 3000 metric tons of cocoa
+                    </span>
+                    <CheckCircle className="h-4 w-4 text-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:text-emerald-300" />
+                  </div>
+                  <div className="flex justify-between text-sm group transition-all duration-300 hover:translate-x-1">
+                    <span className="text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
+                      Registered DAO as Swiss Verein
+                    </span>
+                    <CheckCircle className="h-4 w-4 text-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:text-emerald-300" />
+                  </div>
+                  <div className="flex justify-between text-sm group transition-all duration-300 hover:translate-x-1">
+                    <span className="text-emerald-200 transition-colors duration-300 group-hover:text-emerald-100">
                       Legal Framework
                     </span>
                     <CheckCircle className="h-4 w-4 text-emerald-400 transition-all duration-300 group-hover:scale-110 group-hover:text-emerald-300" />
@@ -495,7 +466,7 @@ export default function NovaLanding() {
                   </div>
                   <div className="flex justify-between text-sm group transition-all duration-300 hover:translate-x-1">
                     <span className="text-gray-400 transition-colors duration-300 group-hover:text-gray-300">
-                      Token Launch (Q2 2025)
+                      Token Launch (Q3 2025)
                     </span>
                     <Clock className="h-4 w-4 text-gray-500 transition-all duration-300 group-hover:scale-110" />
                   </div>
@@ -649,21 +620,21 @@ export default function NovaLanding() {
         </div>
       </section>
 
-      {/* Footer */}
+      {/* Updated Footer with CacaoX Branding */}
       <footer className="py-8 sm:py-12 bg-black/40 backdrop-blur-sm border-t border-emerald-500/20 transition-all duration-300 hover:bg-black/50">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             <div className="group">
               <div className="flex items-center space-x-2 mb-4">
                 <div className="w-8 h-8 bg-gradient-to-r from-emerald-400 to-purple-400 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110 animate-pulse-slow">
-                  <span className="text-black font-bold text-sm">N</span>
+                  <span className="text-black font-bold text-sm">🍫</span>
                 </div>
                 <span className="text-white font-bold transition-colors duration-300 group-hover:text-emerald-200">
-                  Nova Association
+                  CacaoX
                 </span>
               </div>
               <p className="text-emerald-200 text-sm transition-colors duration-300 group-hover:text-emerald-100">
-                Swiss DAO advancing ethical commodity trading through blockchain technology
+                Powered by Nova Association - Swiss DAO advancing ethical commodity trading through blockchain technology
               </p>
             </div>
 
@@ -691,7 +662,7 @@ export default function NovaLanding() {
                     href="#"
                     className="hover:text-emerald-100 transition-all duration-300 hover:translate-x-1 inline-block"
                   >
-                    Staking
+                    Tokenization
                   </Link>
                 </li>
                 <li>
@@ -755,7 +726,7 @@ export default function NovaLanding() {
 
           <div className="border-t border-emerald-500/20 mt-6 sm:mt-8 pt-6 sm:pt-8 text-center">
             <p className="text-emerald-200 text-xs sm:text-sm transition-colors duration-300 hover:text-emerald-100 px-2">
-              © 2025 Nova Network Association. All rights reserved. | Swiss Verein, Canton Zug
+              © 2025 Nova Association. All rights reserved. | Swiss Verein, Canton Zug
             </p>
           </div>
         </div>
@@ -763,3 +734,4 @@ export default function NovaLanding() {
     </div>
   )
 }
+
