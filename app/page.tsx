@@ -539,9 +539,9 @@ export default function NovaLanding() {
       <section id="governance" className="py-12 sm:py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12 sm:mb-16 animate-fade-in-up">
-            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6">Decentralized Governance</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-4 sm:mb-6">Algorithmic Governance</h2>
             <p className="text-lg sm:text-xl text-emerald-200 max-w-3xl mx-auto px-2">
-              Community-driven decision making with transparent voting and council oversight
+              Member-driven decision making with transparent voting and Swiss regulatory oversight.
             </p>
           </div>
 
