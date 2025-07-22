@@ -7,22 +7,16 @@ import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { ArrowRight, Shield, Globe, Coins, TrendingUp, Users, CheckCircle, ExternalLink, Menu, X, Zap, Hexagon, BarChart3, Activity, Wallet, Network, Clock, FileText, Building } from "lucide-react"
 import Link from "next/link"
+import { useCocoaPrice } from "@/hooks/use-cocoa-price"
 
 export default function NovaLanding() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [cocoaPrice, setCocoaPrice] = useState(2847) // Current cocoa price per tonne
   const [developmentProgress, setDevelopmentProgress] = useState(65) // Development completion percentage
   const [tokenizedValue, setTokenizedValue] = useState(0) // Current tokenized value in USD
   const [targetTokenizedValue] = useState(21000000) // Target $21M
 
-  // Realistic market data updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCocoaPrice(prev => prev + (Math.random() - 0.5) * 20) // Realistic cocoa price fluctuation
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
+  // Use real cocoa price data
+  const { data: cocoaPriceData, loading: priceLoading, error: priceError } = useCocoaPrice()
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-950 via-purple-950 to-emerald-900 animate-gradient-shift relative overflow-hidden">
@@ -51,17 +45,59 @@ export default function NovaLanding() {
             </Badge>
           </div>
           
-          {/* Project Status Indicator */}
+          {/* Project Status Indicator with Real Price */}
           <div className="hidden lg:flex items-center space-x-4 text-sm">
             <div className="flex items-center space-x-2 glassmorphism px-3 py-1 rounded-lg">
               <Building className="w-4 h-4 text-emerald-400 animate-pulse-slow" />
               <span className="text-emerald-200">Nova Association</span>
               <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse-slow"></div>
             </div>
-            <div className="glassmorphism px-3 py-1 rounded-lg">
-              <span className="text-emerald-200">Cocoa: </span>
-              <span className="text-white font-semibold">${cocoaPrice}/t</span>
+            
+            <div className="glassmorphism px-3 py-1 rounded-lg min-w-[140px]">
+              {priceLoading ? (
+                <div className="flex items-center space-x-2">
+                  <Coins className="w-4 h-4 text-purple-400 animate-pulse" />
+                  <span className="text-emerald-200">Cocoa:</span>
+                  <span className="text-white font-semibold">Loading...</span>
+                </div>
+              ) : priceError ? (
+                <div className="flex items-center space-x-2">
+                  <Coins className="w-4 h-4 text-purple-400" />
+                  <span className="text-emerald-200">Cocoa:</span>
+                  <span className="text-white font-semibold">$2,847/t</span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Coins className="w-4 h-4 text-purple-400" />
+                    <span className="text-emerald-200">Cocoa:</span>
+                  </div>
+                  <div className="flex items-center space-x-1">
+                    <span className="text-white font-semibold">${cocoaPriceData?.price.toLocaleString()}/t</span>
+                    {cocoaPriceData && (
+                      <span className={`text-xs ${cocoaPriceData.changePercent >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {cocoaPriceData.changePercent >= 0 ? '+' : ''}{cocoaPriceData.changePercent}%
+                      </span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
+            
+            {cocoaPriceData?.marketState && (
+              <div className="glassmorphism px-3 py-1 rounded-lg">
+                <div className={`flex items-center space-x-2 ${
+                  cocoaPriceData.marketState === 'REGULAR' ? 'text-emerald-400' : 'text-gray-400'
+                }`}>
+                  <div className={`w-2 h-2 rounded-full ${
+                    cocoaPriceData.marketState === 'REGULAR' ? 'bg-emerald-400 animate-pulse' : 'bg-gray-400'
+                  }`}></div>
+                  <span className="text-xs font-medium">
+                    {cocoaPriceData.marketState === 'REGULAR' ? 'LIVE' : cocoaPriceData.marketState}
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Desktop Navigation */}
@@ -208,11 +244,11 @@ export default function NovaLanding() {
         )}
       </header>
 
-      {/* Hero Section with Updated Timeline */}
+      {/* Hero Section with Real Price Data */}
       <section className="relative py-12 sm:py-20 lg:py-32 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-purple-500/10 backdrop-blur-3xl animate-gradient-shift-slow"></div>
         
-        {/* Project Status Ticker */}
+        {/* Project Status Ticker with Real Data */}
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-20">
           <div className="glassmorphism px-6 py-2 rounded-full border-neon">
             <div className="flex items-center space-x-4 text-sm">
@@ -231,8 +267,30 @@ export default function NovaLanding() {
               <div className="flex items-center space-x-2">
                 <Coins className="w-4 h-4 text-purple-400" />
                 <span className="text-emerald-200">Cocoa:</span>
-                <span className="text-white font-bold">${cocoaPrice}/t</span>
+                {priceLoading ? (
+                  <span className="text-white font-bold">Loading...</span>
+                ) : (
+                  <div className="flex items-center space-x-1">
+                    <span className="text-white font-bold">
+                      ${cocoaPriceData?.price.toLocaleString() || '2,847'}/t
+                    </span>
+                    {cocoaPriceData && (
+                      <span className={`text-xs ${cocoaPriceData.changePercent >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
+                        {cocoaPriceData.changePercent >= 0 ? '↗' : '↘'}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
+              {cocoaPriceData?.source === 'Yahoo Finance' && (
+                <>
+                  <div className="w-px h-4 bg-emerald-500/30"></div>
+                  <div className="flex items-center space-x-1">
+                    <div className="w-1 h-1 bg-emerald-400 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-emerald-300">LIVE</span>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
